@@ -5,11 +5,13 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.junit.Test;
 import org.yakindu.sct.model.sgraph.State;
 import org.yakindu.sct.model.sgraph.Statechart;
+import org.yakindu.sct.model.sgraph.Transition;
 import org.yakindu.sct.model.stext.stext.EventDefinition;
 import org.yakindu.sct.model.stext.stext.VariableDefinition;
 
@@ -46,9 +48,16 @@ public class Main {
 				State state = (State) content;
 				System.out.println(state.getName());
 				//2.3. exercise
-				if(previous != null) {
-					System.out.println(previous.getName() + " -> " + state.getName());
+				EList<Transition> transitions = state.getOutgoingTransitions();
+				
+				for(int i = 0 ; i < transitions.size(); i++) {
+					System.out.println(transitions.get(i).getSource().getName() + " -> " + transitions.get(i).getTarget().getName());
 				}
+				
+				
+				//if(previous != null) {
+				//	System.out.println(previous.getName() + " -> " + state.getName());
+				//}
 				previous = state;
 				//2.4. exercise
 				if(state.getOutgoingTransitions().size() == 0) {
